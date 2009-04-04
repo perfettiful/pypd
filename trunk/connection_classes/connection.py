@@ -1,20 +1,17 @@
 
 ##########################################################
 ##########################################################
-# description: abstract class that represents any Pd object
+# description: abstract class that represents any single connection between Pd objects
 #
 # autor: jeraman
-# date: 03/04/2009
+# date: 04/04/2009
 ##########################################################
 ##########################################################
 
-class PdObject:
-    def __init__(self, x, y, id):
-        self.x=x
-        self.y=y
-        self.id=id
-        
-    def move (self, x, y):
-        self.x=x
-        self.y=y
+class Connection:
+    def __init__(self, id_src, id_dest, inlet, outlet):
+        self.id_src= id_src
+        self.id_dest= id_dest
+        self.inlet=inlet
+        self.outlet=outlet
         
