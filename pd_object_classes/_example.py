@@ -4,7 +4,7 @@
 # description: test file
 #
 # autor: jeraman
-# date: 03/04/2009
+# date: 04/04/2009
 ##########################################################
 ##########################################################
 
@@ -14,8 +14,8 @@ from pd_object_collection import *
 if __name__ == '__main__':
     poc = PdObjectColletion()
     print "collection of pd objects created successfully"
-    print "list: " + str(poc.list)
     print "creating of pd objects itself"
+    print "list: " + str(poc.list)
     obj1 = Object(100, 100, 'dac~', 1)
     obj2 = Message(101, 101, 'merda', 2)
     obj3 = Number(102, 102, 3)
