@@ -21,9 +21,6 @@ from subprocess import *
 
 
 
-
-
-
 #variable that stores the port number
 PORT = 3000 
 #variable that stores the host
@@ -87,5 +84,6 @@ class Communication(socket):
     def disconnectPD(self): 
         self.close() 
         print "closing connection with pd" 
+        
     
     
