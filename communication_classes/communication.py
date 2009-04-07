@@ -28,7 +28,7 @@ from subprocess import *
 PORT = 3000 
 #variable that stores the host
 HOST = "localhost"
-#replace this to where pdsend file is (COMPLETY DIRECTORY)
+#replace this to where pd file is (COMPLETY DIRECTORY)
 PD_DIR = "//Applications/audio/Pd-extended.app/Contents/Resources/bin"
 #replace this to where server.pd is (COMPLETY DIRECTORY)
 SERVER_DIR = "//Users/Jera/Documents/projetos/_pyD/pypd/communication_classes"
@@ -51,17 +51,20 @@ class RemotePd ( Thread ):
 #communication class
 class Communication(socket): 
     #constructor
-    def __init__(self, host=HOST, port=PORT): 
-        self._port = int(port) 
-        self._host = host 
+    def __init__(self): 
+        self._port = int(PORT) 
+        self._host = HOST 
         socket.__init__(self)
-        #initializing the server.pd...
+    
+    #initializing the server.pd...
+    def initPD (self):
         print "initializing server.pd..."
         RemotePd().start()
         sleep(5)
-        
+            
     #connecting to pd
     def connectPd(self): 
+        initPD()
         try: 
             self.connect((self._host, self._port)) 
             print "connecting with pd"
