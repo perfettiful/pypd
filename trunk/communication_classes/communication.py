@@ -39,7 +39,7 @@ SERVER_DIR = "//Users/Jera/Documents/projetos/_pyD/pypd/communication_classes"
 
 
 # a thread class that we're gonna use for calling the server.pd patch
-class Pd ( Thread ):
+class RemotePd ( Thread ):
    def run ( self ):
        temp = "cd %s && ./pd -nogui %s/server.pd" %(PD_DIR, SERVER_DIR)
        p = Popen(temp, shell=True)
@@ -57,7 +57,7 @@ class Communication(socket):
         socket.__init__(self)
         #initializing the server.pd...
         print "initializing server.pd..."
-        Pd().start()
+        RemotePd().start()
         sleep(5)
         
     #connecting to pd
