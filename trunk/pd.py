@@ -23,7 +23,7 @@ class Pd:
         print "criei conexoes"
         cc  = ConnectionCollection()
         print "criei pd objects"
-        poc = PdObjectColletion()
+        poc = PdObjectCollection()
 
 if __name__ == "__main__": 
     pd = Pd() 
