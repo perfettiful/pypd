@@ -12,7 +12,7 @@
 from pd_object_collection import *
 
 if __name__ == '__main__':
-    poc = PdObjectColletion()
+    poc = PdObjectCollection()
     print "collection of pd objects created successfully"
     print "creating of pd objects itself"
     print "list: " + str(poc.list)

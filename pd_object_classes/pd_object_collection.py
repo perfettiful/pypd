@@ -16,7 +16,7 @@ from comment import *
 
 
 
-class PdObjectColletion:
+class PdObjectCollection:
     def __init__(self):
         self.list=[]
         
