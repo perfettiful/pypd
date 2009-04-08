@@ -14,7 +14,11 @@ from communication_classes.communication      import *
 from connection_classes.connection_collection import *
 from pd_object_classes.pd_object_collection   import *
 
-
+'''
+    - remove connection doesn't work
+    - when the process ends, pd thread remains running
+    - create example of Pd classs
+'''
 
 class Pd:
     #constructor
@@ -36,16 +40,52 @@ class Pd:
         self.cc.create(obj)
     
     #removing a given object
-    def disconnect(self, id_src, id_dest, inlet, outlet):
-        self.cc.remove(id_src, id_dest, inlet, outlet)
+    #def disconnect(self, id_src, id_dest, inlet, outlet):
+    #    self.cc.remove(id_src, id_dest, inlet, outlet)
     
     #creating a given object
     def create(self, obj):
         self.poc.create(obj)
     
     #removing a given object by its id
-    def remove(self, id):
-        self.poc.remove(id)
+    #def remove(self, id):
+    #    self.poc.remove(id)
+    
+    def remove(self, id, text):
+        count=0
+        for obj in self.poc.list:
+            comp=None
+            if isinstance(obj, Object):
+                comp=obj.label
+                ##############################################
+                #lembrar de criar um caso pra quando for gui!!!
+                ##############################################
+            elif isinstance(obj, Message):
+                comp=obj.text
+            elif isinstance(obj, Number):
+                comp=str(obj.value)
+            elif isinstance(obj, Symbol):
+                comp=obj.symbol
+            elif isinstance(obj, Comment):
+                comp=obj.text
+            
+            if text==comp:
+               count+=1 
+            
+            if obj.id==id:
+                break
+            
+        self.socket.send("pd-new find %s;"%(text))
+        i=1
+        while i<count:
+            self.socket.send("pd-new findagain;")
+            print "aiaiai"
+            print count
+            i+=1
+        self.socket.send("pd-new cut;")
+        self.socket.send("pd-new menusave;")
+            
+            
     
     #moving a given object
     def move(self, id, x, y):
@@ -70,7 +110,8 @@ class Pd:
         serverFile.close()
         
         #getting the begining of the pd canvas where the user is working
-        aux=text.split("\n#N canvas 0 22 450 300 new 1;")
+        aux=text.split("\n#N canvas 0 22 737 328 new 1;")
+        #print aux
         #getting the end of the pd canvas where the user is working
         aux=aux[len(aux)-1].split("\n#X restore 122 92 pd new;")
         # separating them by lines
@@ -83,7 +124,6 @@ class Pd:
         
     #loads a given pd line to memory   
     def loadLine(self, line, index):
-        print line
         temp=line.split()
         obj=None
         
@@ -114,7 +154,9 @@ class Pd:
                 obj=Number(temp[2], temp[3], index)
                 
             elif temp[1]=="symbolatom":
-                obj=Symbol(temp[2], temp[3], index)
+                aux=temp[4:(len(temp))]
+                text=' '.join(aux)
+                obj=Symbol(temp[2], temp[3], text, index)
                 
             elif temp[1]=="text":
                 aux=temp[4:(len(temp))]
@@ -122,19 +164,57 @@ class Pd:
                 obj=Comment(temp[2], temp[3], text, index)
             
             #print obj
-            self.create(obj)
+            if obj!=None:
+                self.create(obj)
         
         
 if __name__ == "__main__": 
     pd = Pd() 
     pd.loadFile()
-    #print pd
+    pd.init()
+    
+    
+    
+    '''
+    ######## removing 1! #########
+    for element in pd.poc.list:
+        print element.label
+    
+    pd.remove(2, "osc~ 440")
     
     for element in pd.poc.list:
-        print element
+        print element.label
     
-    for element in pd.cc.list:
-        print element
+    ######## removing 2! #########
+    for element in pd.poc.list:
+        print element.label
+    
+    pd.remove(1, "osc~")
+    
+    for element in pd.poc.list:
+        print element.label
+    
+    ######## removing 3! #########
+    for element in pd.poc.list:
+        print element.label
+    
+    pd.remove(0, "dac~")
+    
+    for element in pd.poc.list:
+        print element.label
+    '''
+    
+    pd.finish()
+    print "done."
+
+    
+    #print pd
+    
+    #for element in pd.poc.list:
+    #    print element
+    
+    #for element in pd.cc.list:
+    #    print element
 
     #pd.init()
     #pd.finish()

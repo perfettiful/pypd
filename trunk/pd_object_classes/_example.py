@@ -20,7 +20,7 @@ if __name__ == '__main__':
     obj2 = Message(101, 101, 'merda', 2)
     obj3 = Number(102, 102, 3)
     obj4 = Comment(104, 104, 'huhuuhuhu', 4)
-    obj5 = Symbol(105, 105, 5)
+    obj5 = Symbol(105, 105, "Symbol", 5)
     poc.create(obj1)
     poc.create(obj2)
     poc.create(obj3)

@@ -11,7 +11,8 @@
 from pd_object import *
 
 class Symbol (PdObject):
-    def __init__(self, x, y, id):
-        PdObject.__init__(self,x, y, id)        
-
+    def __init__(self, x, y, symbol, id):
+        PdObject.__init__(self,x, y, id)    
+        self.symbol=symbol    
+        
     
