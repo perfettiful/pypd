@@ -61,7 +61,7 @@ class Communication(socket):
             
     #connecting to pd
     def connectPd(self): 
-        initPD()
+        self.initPD()
         try: 
             self.connect((self._host, self._port)) 
             print "connecting with pd"
@@ -74,6 +74,8 @@ class Communication(socket):
     def sendPd(self, command):
         try:
             command += ";" 
+            self.send(command)
+            command ="pd-new menusave;"
             self.send(command)
             return True
         except error, err: 
