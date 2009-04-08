@@ -3,6 +3,13 @@
 #X msg 297 63 \; pd dsp 1;
 #X msg 295 112 \; pd dsp 0;
 #N canvas 0 22 450 300 new 1;
+#X obj 91 76 dac~;
+#X obj 40 40 osc~ 440;
+#X msg 208 17 merdando ei merdando;
+#X floatatom 211 84 5 0 0 0 - - -;
+#X symbolatom 206 151 10 0 0 0 - - -;
+#X text 198 113 hahahhaha uiui titia!;
+#X connect 1 0 0 0;
 #X restore 122 92 pd new;
 #X obj 123 51 netreceive 3000 0 old;
 #X connect 0 0 1 0;

@@ -28,6 +28,7 @@ if __name__ == "__main__":
     #initializing it
     pd.connectPd() 
     
+    
         
     #main loop - this is the command line ui
     while 1:    
