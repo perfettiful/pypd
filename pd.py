@@ -15,7 +15,6 @@ from connection_classes.connection_collection import *
 from pd_object_classes.pd_object_collection   import *
 
 '''
-    - when the process ends, pd thread remains running
     - create example of Pd classs
 '''
 
@@ -64,7 +63,6 @@ class Pd:
         
         if isinstance(obj, Object):
             command = "obj %d %d %s" % (int(obj.x), int(obj.y), obj.label)
-            #command = "obj %d %d %s" % (obj.x, obj.y, obj.label)
             ##############################################
             #lembrar de criar um caso pra quando for gui!!!
             ##############################################
