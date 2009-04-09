@@ -73,7 +73,7 @@ class Communication(socket):
     #sending a command to pd
     def sendPd(self, command):
         try:
-            command += ";" 
+            command = "pd-new "+command+ ";" 
             self.send(command)
             command ="pd-new menusave;"
             self.send(command)

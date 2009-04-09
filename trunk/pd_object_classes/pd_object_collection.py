@@ -33,28 +33,6 @@ class PdObjectCollection:
     def create(self, obj):
         self.list.append(obj)
     
-    '''
-    #creates a object
-    def createObject(self, o:
-        self.append(Object(x, y, label, id))
-    
-    #creates a message
-    def createMessage(self, x, y, text, id):
-        self.append(Message(x, y, text, id))
-        
-    #creates a number
-    def createNumber(self, x, y, id):
-        self.append(Number(x, y, id))
-    
-    #creates a symbol
-    def createSymbol(self, id):
-        self.append(Symbol(x, y, id))
-    
-    #creates a comment
-    def createComment(self, x, y, text, id):
-        self.append(Comment(x, y, text, id))
-    '''
-    
     
     ######## remove function #######
     def remove (self,id):
