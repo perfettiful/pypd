@@ -123,6 +123,7 @@ if __name__ == "__main__":
         #END OF main loop 
             
         #sending a simple message
+        msg+=";"
         pd.sendPd(msg) 
         
     #disconnecting   

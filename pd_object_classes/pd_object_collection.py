@@ -25,8 +25,7 @@ class PdObjectCollection:
         for obj in self.list:
             if (id == obj.id):
                 return obj
-        else:
-            return None
+        return None
     
     ######## create function #######
     

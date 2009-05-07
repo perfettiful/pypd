@@ -5,6 +5,7 @@
 #
 # autor: jeraman
 # date: 06/04/2009
+# v2:27/04/2009
 ##########################################################
 ##########################################################
 
@@ -15,7 +16,9 @@ from connection_classes.connection_collection import *
 from pd_object_classes.pd_object_collection   import *
 
 '''
+    - escrever o move methods
     - create example of Pd classs
+    - rewrite example of Communication
 '''
 
 class Pd:
@@ -26,15 +29,26 @@ class Pd:
         self.cc     = ConnectionCollection()
         self.poc    = PdObjectCollection()
         
+      
+      
+      
         
     #initializing the pd api - must be called before working with it
     def init(self):
         self.socket.connectPd()
         
+      
+      
+      
+      
         
     #finishing a pd api session - must be called after working with it
     def finish(self):
         self.socket.disconnectPD()
+    
+    
+    
+    
     
     
     #connecting two objects
@@ -44,6 +58,12 @@ class Pd:
         command="connect %d %d %d %d"%(int(obj.id_src), int(obj.id_dest), int(obj.inlet), int(obj.outlet))
         self.socket.sendPd(command)
     
+        self.loadFile()
+    
+    
+    
+    
+    
     
     #removing a given object
     #def disconnect(self, id_src, id_dest, inlet, outlet):
@@ -51,6 +71,13 @@ class Pd:
     def disconnect(self, id_src, id_dest, inlet, outlet):
         command="disconnect %d %d %d %d"%(id_src, id_dest, inlet, outlet)
         self.socket.sendPd(command)
+        
+        self.loadFile()
+
+
+
+
+
 
 
     #creating a given object
@@ -58,8 +85,6 @@ class Pd:
     #    self.poc.create(obj)
     def create(self, obj):
         command=None
-        
-        #"The sum of 1 + 2 is {0}".format(1+2)
         
         if isinstance(obj, Object):
             command = "obj %d %d %s" % (int(obj.x), int(obj.y), obj.label)
@@ -80,6 +105,12 @@ class Pd:
             command="text %d %d %s"%(obj.x, obj.y, obj.text)
         
         self.socket.sendPd(command)
+        
+        self.loadFile()
+       
+       
+       
+       
         
  
     #removing a given object by its id
@@ -111,48 +142,87 @@ class Pd:
         i=1
         while i<count:
             self.socket.send("pd-new findagain;")
-            print "aiaiai"
-            print count
+            #print "aiaiai"
+            #print count
             i+=1
         self.socket.send("pd-new cut;")
         self.socket.send("pd-new menusave;")
-            
-            
+        
+        self.loadFile()
     
-    ########################################
-    ########################################
-    # TODO - edit objects
-    # TODO - move objects
-    ########################################
-    ########################################
     
+    
+    
+    
+    #method that erases every data in memory
+    def resetData(self):
+        self.poc.list=[]
+        self.cc.list =[]
+
     
     
     #everytime it happens a change, loads what happened to pd
     def loadFile(self):
-        #loads the text from the file
-        serverFile = open("communication_classes/server.pd","r")
-        #jumping to a specific position
-        text=serverFile.read()
-        #closing the file
-        serverFile.close()
+        #cleans the memory
+        self.resetData()
         
-        #getting the begining of the pd canvas where the user is working
-        aux=text.split("\n#N canvas 0 22 737 328 new 1;")
-        #print aux
-        #getting the end of the pd canvas where the user is working
-        aux=aux[len(aux)-1].split("\n#X restore 122 92 pd new;")
-        # separating them by lines
-        aux=aux[0].split(";")
+        text=""
+        #reloads till there's a content in the file
+        while len(text)==0:
+            #loads the text from the file
+            serverFile = open("communication_classes/server.pd","r")
+            #jumping to a specific position
+            text=serverFile.read()
+            #closing the file
+            serverFile.close()
         
-        #loading the file to memory
+        text=""
+        while len(text)==0:
+            serverFile = open("communication_classes/server.pd","r")
+            text=serverFile.read()
+            serverFile.close()
+        
+        
+        text=""
+        while len(text)==0:
+            serverFile = open("communication_classes/server.pd","r")
+            text=serverFile.read()
+            serverFile.close()
+        
+        aux=text.split(";")
+        print
+        print "1\\\\\\1"
+        print aux
+        print "1///1"
+        print
+        
+#        if len(aux) > 7:
+#            print "######################################" + aux[7]
+#            print "######################################"
+
+        aux=aux[7:(len(aux)-4)]
+        print
+        print "2\\\\\\2"
+        print aux
+        print "2///2"
+        print
+        
         for index in range(len(aux)):
             self.loadLine(aux[index], index)
+        
+
+       
+       
+       
         
         
     #loads a given pd line to memory   
     def loadLine(self, line, index):
+        #print "line: " + line
+        #print
+
         temp=line.split()
+        
         obj=None
         
         #in this case don't do anything
@@ -162,7 +232,8 @@ class Pd:
         
         if temp[1]=="connect":
             obj=Connection(temp[2], temp[3], temp[4], temp[5])
-            self.connect(obj)
+            print obj
+            self.cc.create(obj)
         else:
             if temp[1]=="obj":
                 aux=temp[4:(len(temp))]
@@ -193,15 +264,101 @@ class Pd:
             
             #print obj
             if obj!=None:
-                self.create(obj)
+                self.poc.create(obj)
+        
+        
+        
+        
+        
+    ########################################
+    ########################################
+    # TODO - edit objects
+    # TODO - move objects
+    ########################################
+    ########################################
+    
+    #edit a specific object
+    def edit(self, id, text, newObj):
+        #1- busca o objeto (objVelho) pelo id
+        #    a- se nao encontrou, retorna erro
+        #    b- se encontrou, retorne objNovo
+        #2 - para cada conexao existente, verifica se ela envolve o objVelho encontrado
+        #    a- caso sim, armazena em connectionsTemp  
+        #3 - remove objVelho da lista de objetos existentes 
+        #4 - adiciona objNovo da lista de objetos existentes
+        #5 - realiza todas as conexoes de objVelho em objNovo 
+        
+        #1
+        oldObj=self.poc.search(id)
+        
+        #1- a and b
+        if oldObj==None:
+            print "Error editing object " + id
+            return None
+        #2
+        result=self.cc.searchConnectionsOfAnObject(id)
+        
+        #vai aparecer um BUG aqui.
+        #o text enviado deve ser igual ao do oldObj encontrado!!! 
+        #essa restricao pode ser feita em 1
+        #3
+        self.remove(oldObj.id, text)
+        
+        #vai aparecer um BUG aqui.
+        #verificar se a modificacao foi adequada!!!
+        #4
+        self.create(newObj)
+        
+        #5
+        newObj.id=id
+        for c in result:
+            self.connect(c)
+            
+        
         
         
 if __name__ == "__main__": 
+
     pd = Pd() 
-    pd.loadFile()
     pd.init()
+        
+    obj0   = Object(100, 100, "dac~", 0)
+    oldObj = Object(100, 100, "osc~ 440", 1)
+    newObj = Object(100, 100, "osc~ 880", 1)
+    
+    c1=Connection(oldObj.id, 0, obj0.id, 0)
+
+    pd.create(obj0)
+    print "created obj0"
+    sleep(2)
+    
+    pd.create(oldObj)
+    print "created oldObj"
+    sleep(2)
+    
+    pd.connect(c1)
+    print "connected"
+    sleep(2)
+    
+    pd.edit(oldObj.id, oldObj.label, newObj)
+    print "modified from osc~ 400 to osc~ 880"
+    sleep(2)
+    
+    pd.disconnect(c1.id_src, c1.id_dest, c1.inlet, c1.outlet)
+    print "objects disconnected"
+    sleep(2)
+    
+    pd.remove(obj0.id, obj0.label)
+    print "removed dac~"
+    sleep(2)
+    
+    pd.remove(newObj.id, newObj.label)
+    print "removed osc~ 880"
+    sleep(2)
+    
     
     '''
+    
     obj1 = Object(100, 100, "dac~", 0)
     obj2 = Object(100, 100, "osc~ 440", 1)
     
@@ -213,9 +370,9 @@ if __name__ == "__main__":
     
     sleep(3)
     pd.disconnect(c1.id_src, c1.id_dest, c1.inlet, c1.outlet)
+    
+    
     '''
-    
-    
     '''
     
     obj1 = Object(100, 100, 'dac~', 0)
@@ -272,14 +429,3 @@ if __name__ == "__main__":
     pd.finish()
     print "done."
 
-    
-    #print pd
-    
-    #for element in pd.poc.list:
-    #    print element
-    
-    #for element in pd.cc.list:
-    #    print element
-
-    #pd.init()
-    #pd.finish()

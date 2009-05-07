@@ -31,6 +31,16 @@ if __name__ == '__main__':
     for i in poc.list:
         print i
     
+    print "##########################################"
+    print "searching an invalid object"
+    obj=poc.search(7)
+    print obj
+    print "searching the first element"
+    obj=poc.search(1)
+    print obj
+    print obj.id
+    #print obj.text
+    print "##########################################"
       
     print "editing pd objects... (printing before modification/after modification)"
     print obj4
