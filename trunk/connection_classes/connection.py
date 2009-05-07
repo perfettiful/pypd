@@ -9,7 +9,7 @@
 ##########################################################
 
 class Connection:
-    def __init__(self, id_src, id_dest, inlet, outlet):
+    def __init__(self, id_src, outlet, id_dest, inlet):
         self.id_src= id_src
         self.id_dest= id_dest
         self.inlet=inlet
