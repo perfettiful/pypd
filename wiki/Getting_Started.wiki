@@ -3,7 +3,7 @@
 it's very easy to use pyPd. this tutorial will show how to get started with it, step by step...
 
 == 1 - download... ==
-to download pypd, you need to check out it from svn
+to download pypd, you need to check out it from svn.
 
 *OSX/Linux*
 
