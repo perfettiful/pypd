@@ -16,7 +16,7 @@ from connection_classes.connection_collection import *
 from pd_object_classes.pd_object_collection   import *
 
 '''
-    - escrever o move methods
+    - create move method 
     - create example of Pd classs
     - rewrite example of Communication
 '''
@@ -44,7 +44,7 @@ class Pd:
         
     #finishing a pd api session - must be called after working with it
     def finish(self):
-        self.socket.disconnectPD()
+        self.socket.disconnectPd()
     
     
     
