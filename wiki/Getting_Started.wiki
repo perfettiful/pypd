@@ -6,10 +6,14 @@ it's very easy to use pyPd. this tutorial will show how to get started with pypd
 to download pypd, you need to check out it from svn
 
 *OSX/Linux*
-#open a terminal
-#make or change into the directory where you want the pypd sourcecode
-#run the following command to download pypd from the svn repository:
-{{{svn checkout https://pypd.googlecode.com/svn/trunk/ pypd}}}
+
+  #open a terminal
+
+  #make or change into the directory where you want the pypd sourcecode
+
+  #run the following command to download pypd from the svn repository:
+
+    {{{svn checkout https://pypd.googlecode.com/svn/trunk/ pypd}}}
 
 *Windows*
 
