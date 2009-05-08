@@ -85,7 +85,7 @@ class Communication(socket):
             return False
 
     #closing connection
-    def disconnectPD(self): 
+    def disconnectPd(self): 
         temp = "killall pd"
         p = Popen(temp, shell=True)
         
