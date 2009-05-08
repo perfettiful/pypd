@@ -1,4 +1,4 @@
-= introduction =
+= getting started! =
 
 it's very easy to use pyPd. this tutorial will show how to get started with it, step by step...
 
