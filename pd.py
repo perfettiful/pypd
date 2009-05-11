@@ -54,7 +54,7 @@ class Pd:
     #def connect(self, obj):
     #    self.cc.create(obj)
     def connect(self, obj):
-        command="connect %d %d %d %d"%(int(obj.id_src), int(obj.id_dest), int(obj.inlet), int(obj.outlet))
+        command="connect %d %d %d %d"%(int(obj.id_src), int(obj.outlet), int(obj.id_dest), int(obj.inlet))
         self.socket.sendPd(command)
     
         self.loadFile()
