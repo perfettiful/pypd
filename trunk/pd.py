@@ -108,10 +108,116 @@ class Pd:
         self.loadFile()
        
        
-       
-       
+     
+     
+     
+     
+    #method that verifies how many inlets owns a given object
+    def verifyNumberOfInlets (self, obj, largerId):
+        #some variables
+        i=0
+        stop=False
+
+        #creating a inlet for tests
+        inlet = Object(0, 0, "inlet", largerId)
+        self.create(inlet)
+
         
- 
+        #reloads till there's a content in the file
+        newText=""
+        oldText=""
+        while len(oldText)==0:
+            #loads the text from the file
+            serverFile = open("communication_classes/server.pd","r")
+            #jumping to a specific position
+            oldText=serverFile.read()
+            #closing the file
+            serverFile.close()
+        
+        #trying to connect the inlet to the obj's inlets till a error occurs
+        while not stop:
+            connection = Connection(inlet.id, 0, obj.id, i)
+            pd.connect(connection)
+            
+            #reloads till there's a content in the file
+            oldText = newText
+            newText=""
+            while len(newText)==0:
+                #loads the text from the file
+                serverFile = open("communication_classes/server.pd","r")
+                #updating oldText
+                #jumping to a specific position
+                newText=serverFile.read()
+                #closing the file
+                serverFile.close()
+
+            if len(oldText)==len(newText):
+                stop=True
+            else:    
+                i+=1
+        self.remove(inlet.id)
+        
+        #return the result
+        return i   
+
+
+    
+    
+    
+    
+    
+    #method that verifies how many outlets owns a given object
+    def verifyNumberOfOutlets (self, obj, largerId):
+        #some variables
+        i=0
+        stop=False
+
+        #creating a outlet for tests
+        outlet = Object(0, 0, "outlet", largerId)
+        self.create(outlet)
+
+        
+        #reloads till there's a content in the file
+        newText=""
+        oldText=""
+        while len(oldText)==0:
+            #loads the text from the file
+            serverFile = open("communication_classes/server.pd","r")
+            #jumping to a specific position
+            oldText=serverFile.read()
+            #closing the file
+            serverFile.close()
+        
+        #trying to connect the outlet to the obj's outlets till a error occurs
+        while not stop:
+            connection = Connection(obj.id, i, outlet.id, 0)
+            pd.connect(connection)
+            
+            #reloads till there's a content in the file
+            oldText = newText
+            newText=""
+            while len(newText)==0:
+                #loads the text from the file
+                serverFile = open("communication_classes/server.pd","r")
+                #updating oldText
+                #jumping to a specific position
+                newText=serverFile.read()
+                #closing the file
+                serverFile.close()
+
+            if len(oldText)==len(newText):
+                stop=True
+            else:    
+                i+=1
+        self.remove(outlet.id)
+
+        return i   
+    
+    
+    
+    
+        
+    
     #removing a given object by its id
     def remove(self, id):
         text=None
@@ -174,6 +280,8 @@ class Pd:
     
     
     
+    
+    
     #cleans the entire patch, making it blank
     def cleanPatch(self):
         self.socket.sendPd("clear")
@@ -182,11 +290,15 @@ class Pd:
         
     
     
+    
+    
     #method that erases every data in memory
     def resetMemory(self):
         self.poc.list=[]
         self.cc.list =[]
 
+    
+    
     
     
     #everytime it happens a change, loads what happened to pd
@@ -341,4 +453,18 @@ class Pd:
         newObj.id=id
         for c in result:
             self.connect(c)
+            
+      
+      
+      
+            
+
+if __name__ == "__main__": 
+    pd=Pd()
+    pd.init()
+    pd.cleanPatch()
+    obj=Object(0,0,"t f f f f f f",0)
+    pd.create(obj)
+    print "aqui: %d"%(pd.verifyNumberOfOutlets(obj, 1))
+    pd.finish()
             
