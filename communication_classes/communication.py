@@ -37,10 +37,13 @@ SERVER_DIR = "//Users/Jera/Documents/projetos/_pyD/pypd/communication_classes"
 
 # a thread class that we're gonna use for calling the server.pd patch
 class RemotePd ( Thread ):
-   def run ( self ):
+    def __init__(self):
+       Thread.__init__(self)
+        
+    def run ( self ):
        #self.setDaemon ( False )
        temp = "cd %s && ./pd -nogui %s/server.pd" %(PD_DIR, SERVER_DIR)
-       p = Popen(temp, shell=True)
+       self.p = Popen(temp, shell=True)
 
 
 
@@ -92,5 +95,4 @@ class Communication(socket):
         self.close() 
         print "closing connection with pd" 
         
-    
     
