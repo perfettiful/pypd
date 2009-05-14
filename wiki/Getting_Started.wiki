@@ -19,7 +19,7 @@ to download pypd, you need to check out it from svn.
   # open a terminal.
   # make or change into the directory where you want the pypd sourcecode.
   # run the following command to download pypd from the svn repository:
-      {{{svn checkout https://pypd.googlecode.com/svn/trunk/ pypd}}}
+      {{{svn checkout http://pypd.googlecode.com/svn/trunk/ pypd-read-only}}}
 
 *Windows*
 
