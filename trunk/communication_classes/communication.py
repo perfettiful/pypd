@@ -28,7 +28,7 @@ HOST = "localhost"
 #replace this to where pd file is (COMPLETY DIRECTORY)
 PD_DIR = "//Applications/audio/Pd-extended.app/Contents/Resources/bin"
 #replace this to where server.pd is (COMPLETY DIRECTORY)
-SERVER_DIR = "//Users/Jera/Documents/projetos/_pyD/pypd/communication_classes"
+SERVER_DIR = "//Users/Jera/Documents/projetos/_pyPd/communication_classes"
 
 
 
