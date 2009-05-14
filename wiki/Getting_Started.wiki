@@ -1,5 +1,8 @@
-= pre-requisits =
-  * you should have already Pure Data installed on your machine. you can see how to install it here ().
+= before we start... =
+  * you should have already Pure Data installed on your machine. you can see how to install it: 
+    * mac osx [http://en.flossmanuals.net/PureData/InstallingOSX]
+    * windows [http://en.flossmanuals.net/PureData/InstallingWindows] 
+    * linux (ubuntu) [http://en.flossmanuals.net/PureData/InstallingUbuntu]
   * you should be able to run it in -nogui mode. you can see how to achieve it here.
 
 = getting started! =
