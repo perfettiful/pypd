@@ -113,10 +113,10 @@ class Pd:
         self.loadFile()
         
         #return the id of the created object
-        if self.poc.sizeBefore < len(self.poc.list):
-            return len(self.poc.list)-1
-        else:
-            return -1
+        #if self.poc.sizeBefore < len(self.poc.list):
+        return len(self.poc.list)-1
+        #else:
+        #    return -1
        
        
      
@@ -335,7 +335,7 @@ class Pd:
     
     #method that erases every data in memory
     def resetMemory(self):
-        self.poc.resetMemory()
+        self.poc.list = []
         self.cc.list =[]
 
     
