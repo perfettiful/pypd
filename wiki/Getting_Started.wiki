@@ -1,3 +1,4 @@
+#labels howto,gettingstarted,pypd
 = before we start... =
   * you should have already Pure Data installed on your machine. check how to install it on: 
     * mac osx ([http://en.flossmanuals.net/PureData/InstallingOSX])
